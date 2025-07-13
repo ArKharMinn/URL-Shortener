@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="container mx-auto px-4 py-12 max-w-4xl">
+    <!-- Header -->
+    <header class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-indigo-600 mb-2">URL Shortener</h1>
+      <p class="text-gray-600">Create short links, QR codes, and share them anywhere</p>
+    </header>
+
+    <!-- URL Shortening Form -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+      <form action="/shorten" method="POST" class="space-y-4">
+        <div>
+          <label for="fullUrl" class="block text-sm font-medium text-gray-700 mb-1">Paste your long URL</label>
+          <div class="flex gap-2">
+            <input 
+              type="url" 
+              name="fullUrl" 
+              id="fullUrl" 
+              placeholder="https://example.com/very-long-url" 
+              required
+              class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+            >
+            <button 
+              type="submit" 
+              class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
+            >
+              Shorten
+            </button>
+          </div>
+        </div>
+        </form>
+    </div>
+
+    <!-- URL List -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h2 class="text-lg font-semibold text-gray-800">Your Short URLs</h2>
+      </div>
+      
+      <% if (shortUrls.length > 0) { %>
+        <div class="divide-y divide-gray-200">
+          <% shortUrls.forEach(shortUrl => { %>
+            <div class="p-6 hover:bg-gray-50 transition">
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm text-gray-500 mb-1 truncate">
+                    <i class="fas fa-link mr-2"></i><%= shortUrl.full %>
+                  </p>
+                  <div class="flex items-center">
+                    <a 
+                      href="/<%= shortUrl.short %>" 
+                      class="text-indigo-600 font-medium hover:text-indigo-800 mr-3 truncate"
+                      id="short-<%= shortUrl.short %>"
+                    >
+                      url-shortener/<%= shortUrl.short %>
+                    </a>
+                   
+                  </div>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                  <div class="text-center">
+                    <span class="block text-sm text-gray-500">Clicks</span>
+                    <span class="block font-medium text-gray-800"><%= shortUrl.clicks %></span>
+                  </div>
+                  
+                  <div class="flex gap-2">
+                  
+                     <form action="/delete/<%= shortUrl.id%>" method="POST">
+                        <button
+                        type="submit"
+                            class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full transition"
+                            title="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                     </form>
+                
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="p-12 text-center">
+          <i class="fas fa-link text-4xl text-gray-300 mb-4"></i>
+          <p class="text-gray-500">No shortened URLs yet. Create one above!</p>
+        </div>
+      <% } %>
+    </div>
+        
+  </div>
+</body>
+</html>
