@@ -1,4 +1,5 @@
-URL Shortener
+#URL Shortener
+
 A simple URL shortener web application built with Node.js, Express, MongoDB, and EJS.
 It allows users to shorten long URLs, track clicks, and manage (delete) shortened links.
 
@@ -64,7 +65,6 @@ The server will start at http://localhost:3000
 Usage
 Open your browser and go to http://localhost:3000
 
-![Screenshot](./photo.png)
 
 Enter a long URL and click Shorten
 
@@ -88,6 +88,5 @@ Folder Structure
 ├── package.json
 
 
-License
-This project is licensed under the MIT License.
+![Screenshot](./photo.png)
 
